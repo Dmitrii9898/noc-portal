@@ -3,7 +3,17 @@
 {% block content %}
 <h1 class="h3">Личный кабинет</h1>
 <p>Здравствуйте, {{ user.full_name|default:user.username }}. Роль: {{ user.role_name }}.</p>
-<div class="row mb-4"><div class="col-md-4"><div class="kpi"><strong>{{ applications|length }}</strong>заявок</div></div></div>
+<div class="row mb-4">
+<div class="col-md-4"><div class="kpi"><strong>{{ new_apps|length }}</strong>новых</div></div>
+<div class="col-md-4"><div class="kpi"><strong>{{ approved_apps|length }}</strong>принятых</div></div>
+<div class="col-md-4"><div class="kpi"><strong>{{ rejected_apps|length }}</strong>отклонённых</div></div>
+</div>
+<h2 class="h5">Новые</h2>
+<ul>{% for item in new_apps %}<li>{% if item.project %}{{ item.project }}{% else %}{{ item.event }}{% endif %}</li>{% empty %}<li>Нет.</li>{% endfor %}</ul>
+<h2 class="h5">Принятые</h2>
+<ul>{% for item in approved_apps %}<li>{% if item.project %}{{ item.project }}{% else %}{{ item.event }}{% endif %}</li>{% empty %}<li>Нет.</li>{% endfor %}</ul>
+<h2 class="h5">Отклонённые</h2>
+<ul>{% for item in rejected_apps %}<li>{% if item.project %}{{ item.project }}{% else %}{{ item.event }}{% endif %}</li>{% empty %}<li>Нет.</li>{% endfor %}</ul>
 <div class="d-flex flex-wrap gap-2">
 <a class="btn btn-gold" href="{% url 'pages:event_list' %}">Записаться на мероприятие</a>
 <a class="btn btn-outline-secondary" href="{% url 'accounts:applications' %}">Мои заявки</a>

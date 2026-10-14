@@ -55,7 +55,12 @@ def register(request):
 def cabinet(request):
     request.breadcrumbs = [("Личный кабинет", None)]
     apps = Application.objects.filter(user=request.user).select_related("project", "event")
-    return render(request, "accounts/cabinet.html", {"applications": apps})
+    return render(request, "accounts/cabinet.html", {
+        "applications": apps,
+        "new_apps": apps.filter(status=Application.Status.NEW),
+        "approved_apps": apps.filter(status=Application.Status.APPROVED),
+        "rejected_apps": apps.filter(status=Application.Status.REJECTED),
+    })
 
 
 @login_required
