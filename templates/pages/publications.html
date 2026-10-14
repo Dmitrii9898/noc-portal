@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Публикации — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+<h1 class="h3">Публикации</h1>
+<div class="table-responsive card"><table class="table mb-0">
+<thead><tr><th>Год</th><th>Название</th><th>Авторы</th><th>Файл</th></tr></thead>
+<tbody>{% for item in items %}<tr>
+<td>{{ item.year }}</td><td>{{ item.title }}<div class="small text-secondary">{{ item.summary }}</div></td>
+<td>{{ item.authors }}</td>
+<td>{% if item.file %}<a href="{{ item.file.url }}">скачать</a>{% else %}—{% endif %}</td>
+</tr>{% endfor %}</tbody></table></div>
+{% endblock %}

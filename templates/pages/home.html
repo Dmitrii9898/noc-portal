@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Главная — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+<section class="hero mb-4">
+    <h1>Экспертная площадка устойчивого развития</h1>
+    <p>Портал собирает направления работы центра, проекты, мероприятия и публикации. Записаться на событие или войти в проект можно из личного кабинета, без писем на общий ящик.</p>
+    <a class="btn btn-gold" href="{% url 'pages:event_list' %}">Ближайшие мероприятия</a>
+    <a class="btn btn-outline-light" href="{% url 'pages:about' %}">О центре</a>
+</section>
+<div class="row mb-4">
+    {% for item in directions %}
+    <div class="col-md-6"><div class="card"><div class="card-body">
+        <div class="small text-secondary">ЦУР {{ item.code }}</div>
+        <h2 class="h5"><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></h2>
+        <p class="mb-0">{{ item.summary }}</p>
+    </div></div></div>
+    {% endfor %}
+</div>
+<h2 class="h4">Ближайшие мероприятия</h2>
+<ul class="list-group mb-4">
+    {% for item in events %}
+    <li class="list-group-item"><a href="{{ item.get_absolute_url }}">{{ item.title }}</a>
+        <div class="small text-secondary">{{ item.starts_at|date:"d.m.Y H:i" }} — {{ item.place }}</div></li>
+    {% empty %}<li class="list-group-item">Мероприятий пока нет.</li>{% endfor %}
+</ul>
+<h2 class="h4">Новости</h2>
+<ul class="list-group">
+    {% for item in news %}
+    <li class="list-group-item"><a href="{{ item.get_absolute_url }}">{{ item.title }}</a>
+        <div class="small text-secondary">{{ item.published_at|date:"d.m.Y" }}</div></li>
+    {% endfor %}
+</ul>
+{% endblock %}

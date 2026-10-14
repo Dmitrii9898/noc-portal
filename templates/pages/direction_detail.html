@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}{{ item.title }} — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+<p class="small text-secondary">ЦУР {{ item.code }}</p>
+<h1 class="h3">{{ item.title }}</h1>
+<p style="white-space:pre-line">{{ item.body }}</p>
+<h2 class="h5">Проекты направления</h2>
+<ul>{% for project in projects %}<li><a href="{{ project.get_absolute_url }}">{{ project.title }}</a></li>{% empty %}<li>Проектов пока нет.</li>{% endfor %}</ul>
+{% endblock %}

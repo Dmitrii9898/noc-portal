@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Заявка {{ item.pk }} — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+<h1 class="h3">Заявка № {{ item.pk }}</h1>
+<p>{{ item.user }} — {% if item.project %}{{ item.project }}{% else %}{{ item.event }}{% endif %}. Статус: {{ item.get_status_display }}.</p>
+{% if item.comment %}<p>{{ item.comment }}</p>{% endif %}
+{% if item.attachment %}<p><a href="{{ item.attachment.url }}">Приложенный файл</a></p>{% endif %}
+{% if item.status == "new" %}
+<form method="post">
+{% csrf_token %}
+<button class="btn btn-gold" name="action" value="approve" type="submit">Принять</button>
+<button class="btn btn-outline-danger" name="action" value="reject" type="submit">Отклонить</button>
+</form>
+{% endif %}
+{% endblock %}

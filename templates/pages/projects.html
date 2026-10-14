@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Проекты — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+<h1 class="h3">Проекты</h1>
+<div class="table-responsive card"><table class="table mb-0">
+<thead><tr><th>Проект</th><th>Направление</th><th>Набор</th></tr></thead>
+<tbody>{% for item in items %}<tr>
+<td><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></td>
+<td>{{ item.direction.code }}</td>
+<td>{% if item.is_open %}открыт{% else %}закрыт{% endif %}</td>
+</tr>{% endfor %}</tbody></table></div>
+{% endblock %}

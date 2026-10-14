@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Документы — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+<h1 class="h3">Документы</h1>
+<ul class="list-group">{% for item in items %}
+<li class="list-group-item"><a href="{{ item.file.url }}">{{ item.title }}</a>
+<div class="small text-secondary">{{ item.published_on|date:"d.m.Y" }}</div></li>
+{% empty %}<li class="list-group-item">Файлы появятся после наполнения.</li>{% endfor %}</ul>
+{% endblock %}

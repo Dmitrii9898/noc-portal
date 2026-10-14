@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block title %}Материалы — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+<h1 class="h3">Материалы центра</h1>
+<ul>{% for item in items %}<li>{{ item.year }} — {{ item.title }}{% if item.file %} — <a href="{{ item.file.url }}">файл</a>{% endif %}</li>{% endfor %}</ul>
+{% endblock %}

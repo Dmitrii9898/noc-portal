@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Направления — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+<h1 class="h3">Направления</h1>
+<div class="row">{% for item in items %}
+<div class="col-md-6"><div class="card"><div class="card-body">
+    <div class="small text-secondary">ЦУР {{ item.code }}</div>
+    <h2 class="h5"><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></h2>
+    <p class="mb-0">{{ item.summary }}</p>
+</div></div></div>{% endfor %}</div>
+{% endblock %}

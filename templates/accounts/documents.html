@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block title %}Мои файлы — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+<h1 class="h3">Файлы, приложенные к заявкам</h1>
+<ul>{% for item in files %}<li><a href="{{ item.attachment.url }}">Заявка {{ item.pk }}</a></li>{% empty %}<li>Файлов нет.</li>{% endfor %}</ul>
+{% endblock %}

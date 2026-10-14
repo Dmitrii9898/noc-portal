@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}{{ item.title }} — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+<p class="small text-secondary">{{ item.starts_at|date:"d.m.Y H:i" }} · {{ item.place }}</p>
+<h1 class="h3">{{ item.title }}</h1>
+<p>{{ item.summary }}</p>
+<p style="white-space:pre-line">{{ item.body }}</p>
+{% if item.is_open and user.is_authenticated %}
+<a class="btn btn-gold" href="{% url 'accounts:apply_event' item.slug %}">Записаться</a>
+{% elif item.is_open %}
+<a class="btn btn-gold" href="{% url 'accounts:login' %}">Войти, чтобы записаться</a>
+{% endif %}
+{% endblock %}

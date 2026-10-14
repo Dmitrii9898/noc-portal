@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Заявки — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+<h1 class="h3">Заявки</h1>
+<div class="table-responsive card"><table class="table mb-0"><thead><tr><th>№</th><th>Участник</th><th>Куда</th><th>Статус</th></tr></thead>
+<tbody>{% for item in items %}<tr>
+<td><a href="{% url 'center:application_decide' item.pk %}">{{ item.pk }}</a></td>
+<td>{{ item.user }}</td>
+<td>{% if item.project %}{{ item.project }}{% else %}{{ item.event }}{% endif %}</td>
+<td>{{ item.get_status_display }}</td>
+</tr>{% endfor %}</tbody></table></div>
+{% endblock %}
