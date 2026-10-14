@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 
 from center.forms import ApplicationForm
 from center.models import Application, Event, Project
-from center.services import ApplyError, submit_application
+from center.services import ApplyError, can_apply, submit_application
 
 from .forms import LoginForm, ProfileForm, RegisterForm
 from .models import ROLE_MEMBER, Role
@@ -96,7 +96,8 @@ def _apply(request, project=None, event=None):
             messages.success(request, "Заявка отправлена в центр.")
             return redirect("accounts:applications")
     title = project.title if project else event.title
-    return render(request, "accounts/apply.html", {"form": form, "title": title})
+    block_reason = can_apply(request.user, project=project, event=event)
+    return render(request, "accounts/apply.html", {"form": form, "title": title, "block_reason": block_reason})
 
 
 @login_required
