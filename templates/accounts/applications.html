@@ -2,10 +2,11 @@
 {% block title %}Мои заявки — {{ SITE_NAME }}{% endblock %}
 {% block content %}
 <h1 class="h3">Мои заявки</h1>
-<div class="table-responsive card"><table class="table mb-0"><thead><tr><th>№</th><th>Куда</th><th>Статус</th><th>Дата</th></tr></thead>
+<div class="table-responsive card"><table class="table mb-0"><thead><tr><th>№</th><th>Куда</th><th>Статус</th><th>Дата</th><th></th></tr></thead>
 <tbody>{% for item in items %}<tr>
 <td>{{ item.pk }}</td>
 <td>{% if item.project %}{{ item.project.title }}{% else %}{{ item.event.title }}{% endif %}</td>
 <td>{{ item.get_status_display }}</td><td>{{ item.created_at|date:"d.m.Y" }}</td>
-</tr>{% empty %}<tr><td colspan="4">Заявок нет.</td></tr>{% endfor %}</tbody></table></div>
+<td>{% if item.status == "new" %}<form method="post" action="{% url 'accounts:withdraw' item.pk %}">{% csrf_token %}<button class="btn btn-sm btn-outline-secondary" type="submit">Отозвать</button></form>{% endif %}</td>
+</tr>{% empty %}<tr><td colspan="5">Заявок нет.</td></tr>{% endfor %}</tbody></table></div>
 {% endblock %}

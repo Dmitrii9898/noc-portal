@@ -83,6 +83,7 @@ class Application(models.Model):
         NEW = "new", "Новая"
         APPROVED = "approved", "Принята"
         REJECTED = "rejected", "Отклонена"
+        WITHDRAWN = "withdrawn", "Отозвана"
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="applications")
     kind = models.CharField("Тип", max_length=16, choices=Kind.choices)

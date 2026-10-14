@@ -15,13 +15,17 @@ class ApplyError(Exception):
 
 def open_seats(event):
     """Сколько мест ещё свободно на мероприятии."""
-    taken = event.applications.exclude(status=Application.Status.REJECTED).count()
+    taken = event.applications.exclude(
+        status__in=(Application.Status.REJECTED, Application.Status.WITHDRAWN)
+    ).count()
     return max(event.seats - taken, 0)
 
 
 def already_applied(user, project=None, event=None):
     """Повторная активная заявка того же участника на тот же объект."""
-    qs = Application.objects.filter(user=user).exclude(status=Application.Status.REJECTED)
+    qs = Application.objects.filter(user=user).exclude(
+        status__in=(Application.Status.REJECTED, Application.Status.WITHDRAWN)
+    )
     if project is not None:
         return qs.filter(project=project).exists()
     return qs.filter(event=event).exists()
@@ -77,6 +81,18 @@ def decide(application, actor, approve):
     application.decided_at = timezone.now()
     application.decided_by = actor
     application.save(update_fields=["status", "decided_at", "decided_by"])
+    return application
+
+
+@transaction.atomic
+def withdraw(application, user):
+    """Участник отзывает только свою ещё не рассмотренную заявку."""
+    if application.user_id != user.id:
+        raise ApplyError("Можно отозвать только свою заявку.")
+    if application.status != Application.Status.NEW:
+        raise ApplyError("Отозвать можно только новую заявку.")
+    application.status = Application.Status.WITHDRAWN
+    application.save(update_fields=["status"])
     return application
 
 
