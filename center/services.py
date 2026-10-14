@@ -71,16 +71,17 @@ def submit_application(user, comment, attachment, project=None, event=None):
 
 
 @transaction.atomic
-def decide(application, actor, approve):
-    """Фиксирует решение сотрудника и время решения."""
+def decide(application, actor, approve, note=""):
+    """Фиксирует решение сотрудника, комментарий и время решения."""
     if application.status != Application.Status.NEW:
         raise ApplyError("Решение уже принято.")
     if approve and application.event_id and open_seats(application.event) <= 0:
         raise ApplyError("Свободных мест не осталось.")
     application.status = Application.Status.APPROVED if approve else Application.Status.REJECTED
+    application.decision_note = (note or "")[:300]
     application.decided_at = timezone.now()
     application.decided_by = actor
-    application.save(update_fields=["status", "decided_at", "decided_by"])
+    application.save(update_fields=["status", "decision_note", "decided_at", "decided_by"])
     return application
 
 

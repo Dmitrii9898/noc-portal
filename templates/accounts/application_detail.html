@@ -7,4 +7,5 @@
 {% if item.comment %}<p>Комментарий: {{ item.comment }}</p>{% else %}<p>Комментарий не указан.</p>{% endif %}
 {% if item.attachment %}<p><a href="{{ item.attachment.url }}">Приложенный файл</a></p>{% else %}<p>Файл не приложен.</p>{% endif %}
 {% if item.decided_at %}<p>Решение принято {{ item.decided_at|date:"d.m.Y H:i" }}{% if item.decided_by %}, {{ item.decided_by }}{% endif %}.</p>{% endif %}
+{% if item.decision_note %}<p>Комментарий центра: {{ item.decision_note }}</p>{% endif %}
 {% endblock %}

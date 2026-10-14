@@ -38,7 +38,7 @@ def application_decide(request, pk):
     request.breadcrumbs = [("Центр", "/office/"), ("Заявки", "/office/applications/"), (f"Заявка {item.pk}", None)]
     if request.method == "POST":
         try:
-            decide(item, request.user, approve=request.POST.get("action") == "approve")
+            decide(item, request.user, approve=request.POST.get("action") == "approve", note=request.POST.get("note", ""))
         except ApplyError as exc:
             messages.error(request, str(exc))
         else:

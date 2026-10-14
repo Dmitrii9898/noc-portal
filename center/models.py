@@ -91,6 +91,7 @@ class Application(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE, null=True, blank=True, related_name="applications")
     status = models.CharField("Статус", max_length=16, choices=Status.choices, default=Status.NEW)
     comment = models.TextField("Комментарий", blank=True)
+    decision_note = models.CharField("Комментарий решения", max_length=300, blank=True)
     attachment = models.FileField("Файл", upload_to="applications/", blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     decided_at = models.DateTimeField(null=True, blank=True)
