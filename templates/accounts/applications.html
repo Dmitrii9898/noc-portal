@@ -4,7 +4,7 @@
 <h1 class="h3">Мои заявки</h1>
 <div class="table-responsive card"><table class="table mb-0"><thead><tr><th>№</th><th>Куда</th><th>Статус</th><th>Дата</th><th></th></tr></thead>
 <tbody>{% for item in items %}<tr>
-<td>{{ item.pk }}</td>
+<td><a href="{% url 'accounts:application_detail' item.pk %}">{{ item.pk }}</a></td>
 <td>{% if item.project %}{{ item.project.title }}{% else %}{{ item.event.title }}{% endif %}</td>
 <td>{{ item.get_status_display }}</td><td>{{ item.created_at|date:"d.m.Y" }}</td>
 <td>{% if item.status == "new" %}<form method="post" action="{% url 'accounts:withdraw' item.pk %}">{% csrf_token %}<button class="btn btn-sm btn-outline-secondary" type="submit">Отозвать</button></form>{% endif %}</td>

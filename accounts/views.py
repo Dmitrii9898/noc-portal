@@ -106,6 +106,21 @@ def _apply(request, project=None, event=None):
 
 
 @login_required
+def application_detail(request, pk):
+    item = get_object_or_404(
+        Application.objects.select_related("project", "event", "decided_by"),
+        pk=pk,
+        user=request.user,
+    )
+    request.breadcrumbs = [
+        ("Личный кабинет", "/accounts/cabinet/"),
+        ("Мои заявки", "/accounts/cabinet/applications/"),
+        (f"Заявка {item.pk}", None),
+    ]
+    return render(request, "accounts/application_detail.html", {"item": item})
+
+
+@login_required
 def withdraw_application(request, pk):
     item = get_object_or_404(Application, pk=pk, user=request.user)
     if request.method == "POST":

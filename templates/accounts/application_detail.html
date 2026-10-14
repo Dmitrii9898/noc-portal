@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Заявка {{ item.pk }} — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+<h1 class="h3">Заявка № {{ item.pk }}</h1>
+<p>Куда: {% if item.project %}{{ item.project }}{% else %}{{ item.event }}{% endif %}.</p>
+<p>Статус: {{ item.get_status_display }}. Подана {{ item.created_at|date:"d.m.Y H:i" }}.</p>
+{% if item.comment %}<p>Комментарий: {{ item.comment }}</p>{% else %}<p>Комментарий не указан.</p>{% endif %}
+{% if item.attachment %}<p><a href="{{ item.attachment.url }}">Приложенный файл</a></p>{% else %}<p>Файл не приложен.</p>{% endif %}
+{% if item.decided_at %}<p>Решение принято {{ item.decided_at|date:"d.m.Y H:i" }}{% if item.decided_by %}, {{ item.decided_by }}{% endif %}.</p>{% endif %}
+{% endblock %}
