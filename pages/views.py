@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.shortcuts import get_object_or_404, redirect, render
 
 from center.models import Direction, Event, Partner, Project, Publication
+from center.services import open_seats
 
 from .forms import FeedbackForm
 from .models import News
@@ -51,7 +52,7 @@ def event_list(request):
 def event_detail(request, slug):
     item = get_object_or_404(Event.objects.select_related("direction"), slug=slug)
     request.breadcrumbs = [("Мероприятия", "/events/"), (item.title, None)]
-    return render(request, "pages/event_detail.html", {"item": item})
+    return render(request, "pages/event_detail.html", {"item": item, "seats_left": open_seats(item)})
 
 
 def news_list(request):

@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block title %}{{ item.title }} — {{ SITE_NAME }}{% endblock %}
 {% block content %}
-<p class="small text-secondary">{{ item.starts_at|date:"d.m.Y H:i" }} · {{ item.place }}</p>
+<p class="small text-secondary">{{ item.starts_at|date:"d.m.Y H:i" }} · {{ item.place }} · свободно мест: {{ seats_left }} из {{ item.seats }}</p>
 <h1 class="h3">{{ item.title }}</h1>
 <p>{{ item.summary }}</p>
 <p style="white-space:pre-line">{{ item.body }}</p>
