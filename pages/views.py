@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 
@@ -7,6 +8,10 @@ from center.services import open_seats
 
 from .forms import FeedbackForm
 from .models import News
+
+
+def health(request):
+    return HttpResponse("ok", content_type="text/plain")
 
 
 def home(request):
