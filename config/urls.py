@@ -3,6 +3,8 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 
+handler404 = "config.views.page_not_found"
+
 admin.site.site_header = "НОЦ «Устойчивое развитие»"
 admin.site.site_title = "НОЦ"
 admin.site.index_title = "Панель администратора"
