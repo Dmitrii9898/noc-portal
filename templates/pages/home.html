@@ -16,6 +16,13 @@
     </div></div></div>
     {% endfor %}
 </div>
+<h2 class="h4">Открытые проекты</h2>
+<ul class="list-group mb-4">
+{% for item in projects %}
+<li class="list-group-item"><a href="{{ item.get_absolute_url }}">{{ item.title }}</a>
+<div class="small text-secondary">{{ item.summary }}</div></li>
+{% empty %}<li class="list-group-item">Открытых проектов нет.</li>{% endfor %}
+</ul>
 <h2 class="h4">Ближайшие мероприятия</h2>
 <ul class="list-group mb-4">
     {% for item in events %}
