@@ -7,7 +7,7 @@ from accounts.mixins import admin_required, staff_required
 from accounts.models import AppUser, Role
 from pages.models import Feedback, News
 
-from .forms import EventForm
+from .forms import EventForm, ProjectForm
 from .exports import applications_docx, applications_xlsx
 from .models import Application, AuditLog, Direction, Event, Partner, Project, Publication
 from .services import ApplyError, decide, queue_summary
@@ -79,6 +79,17 @@ def event_toggle(request, pk):
 def project_board(request):
     request.breadcrumbs = [("Центр", "/office/"), ("Проекты", None)]
     return render(request, "office/projects.html", {"items": Project.objects.annotate(taken=Count("applications"))})
+
+
+@staff_required
+def project_add(request):
+    request.breadcrumbs = [("Центр", "/office/"), ("Проекты", "/office/projects/"), ("Новый", None)]
+    form = ProjectForm(request.POST or None)
+    if request.method == "POST" and form.is_valid():
+        form.save()
+        messages.success(request, "Проект создан.")
+        return redirect("center:projects")
+    return render(request, "office/event_form.html", {"form": form, "heading": "Новый проект"})
 
 
 @staff_required

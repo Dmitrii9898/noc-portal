@@ -1,6 +1,21 @@
 from django import forms
 
-from .models import Application, Event
+from .models import Application, Event, Project
+
+
+class ProjectForm(forms.ModelForm):
+    class Meta:
+        model = Project
+        fields = ("direction", "title", "slug", "summary", "body", "started_on", "is_open")
+        widgets = {
+            "direction": forms.Select(attrs={"class": "form-select"}),
+            "title": forms.TextInput(attrs={"class": "form-control"}),
+            "slug": forms.TextInput(attrs={"class": "form-control"}),
+            "summary": forms.TextInput(attrs={"class": "form-control"}),
+            "body": forms.Textarea(attrs={"class": "form-control", "rows": 4}),
+            "started_on": forms.DateInput(attrs={"class": "form-control", "type": "date"}),
+            "is_open": forms.CheckboxInput(),
+        }
 
 
 class EventForm(forms.ModelForm):
