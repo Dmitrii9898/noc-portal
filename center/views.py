@@ -175,6 +175,14 @@ def manage_users(request):
     if request.method == "POST":
         user = get_object_or_404(AppUser, pk=request.POST.get("user_id"))
         role = get_object_or_404(Role, pk=request.POST.get("role_id"))
+        if request.POST.get("active") == "0":
+            if user.pk == request.user.pk:
+                messages.error(request, "Нельзя отключить свою учётную запись.")
+            else:
+                user.is_active = False
+                user.save(update_fields=["is_active"])
+                messages.success(request, "Учётная запись отключена.")
+            return redirect("center:manage_users")
         user.role = role
         user.is_staff = role.name == "Администратор"
         user.save(update_fields=["role", "is_staff"])
