@@ -55,7 +55,8 @@ def application_decide(request, pk):
         else:
             messages.success(request, "Решение сохранено.")
             return redirect("center:applications")
-    return render(request, "office/application_decide.html", {"item": item})
+    seats_left = open_seats(item.event) if item.event_id else None
+    return render(request, "office/application_decide.html", {"item": item, "seats_left": seats_left})
 
 
 @staff_required
