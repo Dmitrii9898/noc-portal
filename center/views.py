@@ -245,4 +245,9 @@ def manage_publications(request):
 @admin_required
 def manage_audit(request):
     request.breadcrumbs = [("Администрирование", "/office/manage/"), ("Журнал", None)]
-    return render(request, "manage/audit.html", {"items": AuditLog.objects.select_related("user")[:80]})
+    kind = request.GET.get("kind") or ""
+    qs = AuditLog.objects.select_related("user")
+    if kind:
+        qs = qs.filter(entity=kind)
+    kinds = AuditLog.objects.exclude(entity="").values_list("entity", flat=True).distinct().order_by("entity")
+    return render(request, "manage/audit.html", {"items": qs[:80], "kind": kind, "kinds": kinds})

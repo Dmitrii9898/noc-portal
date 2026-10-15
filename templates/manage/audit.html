@@ -2,6 +2,12 @@
 {% block title %}Журнал — {{ SITE_NAME }}{% endblock %}
 {% block content %}
 <h1 class="h3">Журнал действий</h1>
+<form method="get" class="mb-3">
+<select class="form-select" name="kind" onchange="this.form.submit()">
+<option value="">Все действия</option>
+{% for value in kinds %}<option value="{{ value }}" {% if kind == value %}selected{% endif %}>{{ value }}</option>{% endfor %}
+</select>
+</form>
 <div class="table-responsive card"><table class="table mb-0"><thead><tr><th>Когда</th><th>Кто</th><th>Описание</th></tr></thead>
 <tbody>{% for item in items %}<tr><td>{{ item.created_at|date:"d.m.Y H:i" }}</td><td>{{ item.user|default:"—" }}</td><td>{{ item.description }}</td></tr>{% endfor %}</tbody></table></div>
 {% endblock %}
