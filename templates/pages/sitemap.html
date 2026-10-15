@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Карта портала — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+<h1 class="h3">Карта портала</h1>
+<ul>
+<li><a href="{% url 'pages:home' %}">Главная</a></li>
+<li><a href="{% url 'pages:about' %}">О центре</a></li>
+<li><a href="{% url 'pages:direction_list' %}">Направления</a></li>
+<li><a href="{% url 'pages:project_list' %}">Проекты</a></li>
+<li><a href="{% url 'pages:event_list' %}">Мероприятия</a></li>
+<li><a href="{% url 'pages:news_list' %}">Новости</a></li>
+<li><a href="{% url 'pages:publications' %}">Публикации</a></li>
+<li><a href="{% url 'pages:partners' %}">Партнёры</a></li>
+<li><a href="{% url 'pages:documents' %}">Документы</a></li>
+<li><a href="{% url 'pages:faq' %}">Вопросы и ответы</a></li>
+<li><a href="{% url 'pages:glossary' %}">Глоссарий</a></li>
+<li><a href="{% url 'pages:contacts' %}">Контакты</a></li>
+<li><a href="{% url 'pages:help' %}">Справка</a></li>
+<li><a href="{% url 'pages:search' %}">Поиск</a></li>
+</ul>
+{% endblock %}

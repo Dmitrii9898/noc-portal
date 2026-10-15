@@ -20,6 +20,7 @@ urlpatterns = [
     path("faq/", views.faq, name="faq"),
     path("glossary/", views.glossary, name="glossary"),
     path("help/", views.help_page, name="help"),
+    path("map/", views.sitemap_page, name="sitemap"),
     path("search/", views.search, name="search"),
     path("contacts/", views.contacts, name="contacts"),
 ]

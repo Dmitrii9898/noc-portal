@@ -126,6 +126,11 @@ def help_page(request):
     return render(request, "pages/help.html")
 
 
+def sitemap_page(request):
+    request.breadcrumbs = [("Карта портала", None)]
+    return render(request, "pages/sitemap.html")
+
+
 def search(request):
     request.breadcrumbs = [("Поиск", None)]
     query = (request.GET.get("q") or "").strip()
