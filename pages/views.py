@@ -104,6 +104,19 @@ def help_page(request):
     return render(request, "pages/help.html")
 
 
+def search(request):
+    request.breadcrumbs = [("Поиск", None)]
+    query = (request.GET.get("q") or "").strip()
+    projects = events = news = []
+    if query:
+        projects = Project.objects.filter(title__icontains=query)
+        events = Event.objects.filter(title__icontains=query)
+        news = News.objects.filter(is_published=True, title__icontains=query)
+    return render(request, "pages/search.html", {
+        "query": query, "projects": projects, "events": events, "news": news,
+    })
+
+
 def contacts(request):
     request.breadcrumbs = [("Контакты", None)]
     form = FeedbackForm(request.POST or None)

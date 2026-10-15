@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Поиск — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+<h1 class="h3">Поиск</h1>
+<form method="get" class="d-flex gap-2 mb-4">
+<input class="form-control" name="q" value="{{ query }}" placeholder="Проект, мероприятие или новость">
+<button class="btn btn-gold" type="submit">Найти</button>
+</form>
+{% if query %}
+<h2 class="h5">Проекты</h2>
+<ul>{% for item in projects %}<li><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></li>{% empty %}<li>Ничего не найдено.</li>{% endfor %}</ul>
+<h2 class="h5">Мероприятия</h2>
+<ul>{% for item in events %}<li><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></li>{% empty %}<li>Ничего не найдено.</li>{% endfor %}</ul>
+<h2 class="h5">Новости</h2>
+<ul>{% for item in news %}<li><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></li>{% empty %}<li>Ничего не найдено.</li>{% endfor %}</ul>
+{% endif %}
+{% endblock %}
