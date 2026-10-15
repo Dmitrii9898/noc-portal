@@ -3,7 +3,9 @@
 {% block content %}
 <h1 class="h3">Новости</h1>
 <ul class="list-group">{% for item in items %}<li class="list-group-item d-flex justify-content-between">
-<span>{{ item.title }} — {% if item.is_published %}опубликована{% else %}скрыта{% endif %}</span>
-<form method="post">{% csrf_token %}<input type="hidden" name="news_id" value="{{ item.pk }}"><button class="btn btn-sm btn-outline-secondary">Переключить</button></form>
+<span>{{ item.title }} — {% if item.is_published %}в архиве{% else %}скрыта{% endif %}{% if item.show_on_home %}, на главной{% endif %}</span>
+<form method="post" class="d-flex gap-2">{% csrf_token %}<input type="hidden" name="news_id" value="{{ item.pk }}">
+<button class="btn btn-sm btn-outline-secondary" name="field" value="archive">Архив</button>
+<button class="btn btn-sm btn-outline-secondary" name="field" value="home">Главная</button></form>
 </li>{% endfor %}</ul>
 {% endblock %}

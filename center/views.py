@@ -121,8 +121,12 @@ def manage_news(request):
     request.breadcrumbs = [("Администрирование", "/office/manage/"), ("Новости", None)]
     if request.method == "POST":
         item = get_object_or_404(News, pk=request.POST.get("news_id"))
-        item.is_published = not item.is_published
-        item.save(update_fields=["is_published"])
+        if request.POST.get("field") == "home":
+            item.show_on_home = not item.show_on_home
+            item.save(update_fields=["show_on_home"])
+        else:
+            item.is_published = not item.is_published
+            item.save(update_fields=["is_published"])
         return redirect("center:manage_news")
     return render(request, "manage/news.html", {"items": News.objects.all()})
 

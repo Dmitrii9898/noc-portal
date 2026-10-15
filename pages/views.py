@@ -15,7 +15,7 @@ def home(request):
         "directions": Direction.objects.all()[:4],
         "events": Event.objects.filter(is_open=True)[:3],
         "projects": Project.objects.filter(is_open=True)[:3],
-        "news": News.objects.filter(is_published=True)[:3],
+        "news": News.objects.filter(is_published=True, show_on_home=True)[:3],
     })
 
 

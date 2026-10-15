@@ -9,6 +9,7 @@ class News(models.Model):
     body = models.TextField("Текст")
     published_at = models.DateTimeField("Дата")
     is_published = models.BooleanField(default=True)
+    show_on_home = models.BooleanField("Показывать на главной", default=True)
 
     class Meta:
         db_table = "news"
