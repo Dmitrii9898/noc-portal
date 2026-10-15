@@ -11,6 +11,7 @@
 <a class="btn btn-gold" href="{% url 'center:manage_users' %}">Пользователи</a>
 {% for item in directions %}<a class="btn btn-outline-secondary" href="{% url 'center:manage_direction' item.pk %}">ЦУР {{ item.code }}</a>{% endfor %}
 <a class="btn btn-outline-secondary" href="{% url 'center:manage_news' %}">Новости</a>
+<a class="btn btn-outline-secondary" href="{% url 'center:manage_partner_add' %}">Партнёр</a>
 <a class="btn btn-outline-secondary" href="{% url 'center:manage_feedback' %}">Обращения</a>
 <a class="btn btn-outline-secondary" href="{% url 'center:manage_publications' %}">Публикации</a>
 <a class="btn btn-outline-secondary" href="{% url 'center:manage_audit' %}">Журнал</a>

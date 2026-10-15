@@ -1,6 +1,18 @@
 from django import forms
 
-from .models import Application, Direction, Event, Project
+from .models import Application, Direction, Event, Partner, Project
+
+
+class PartnerForm(forms.ModelForm):
+    class Meta:
+        model = Partner
+        fields = ("name", "kind", "site", "description")
+        widgets = {
+            "name": forms.TextInput(attrs={"class": "form-control"}),
+            "kind": forms.TextInput(attrs={"class": "form-control"}),
+            "site": forms.URLInput(attrs={"class": "form-control"}),
+            "description": forms.Textarea(attrs={"class": "form-control", "rows": 4}),
+        }
 
 
 class DirectionSummaryForm(forms.ModelForm):

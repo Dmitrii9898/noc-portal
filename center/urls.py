@@ -18,6 +18,7 @@ urlpatterns = [
     path("manage/", views.manage_home, name="manage_home"),
     path("manage/directions/<int:pk>/", views.manage_direction, name="manage_direction"),
     path("manage/users/", views.manage_users, name="manage_users"),
+    path("manage/partners/new/", views.manage_partner_add, name="manage_partner_add"),
     path("manage/news/", views.manage_news, name="manage_news"),
     path("manage/feedback/", views.manage_feedback, name="manage_feedback"),
     path("manage/publications/", views.manage_publications, name="manage_publications"),

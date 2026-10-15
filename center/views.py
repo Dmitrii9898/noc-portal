@@ -8,7 +8,7 @@ from accounts.models import AppUser, Role
 from pages.forms import NewsForm
 from pages.models import Feedback, News
 
-from .forms import DirectionSummaryForm, EventForm, ProjectForm
+from .forms import DirectionSummaryForm, EventForm, PartnerForm, ProjectForm
 from .exports import applications_csv, applications_docx, applications_xlsx
 from .models import Application, AuditLog, Direction, Event, Partner, Project, Publication
 from .services import ApplyError, decide, open_seats, queue_summary
@@ -180,6 +180,17 @@ def manage_users(request):
         messages.success(request, "Роль обновлена.")
         return redirect("center:manage_users")
     return render(request, "manage/users.html", {"items": AppUser.objects.select_related("role"), "roles": Role.objects.all()})
+
+
+@admin_required
+def manage_partner_add(request):
+    request.breadcrumbs = [("Администрирование", "/office/manage/"), ("Новый партнёр", None)]
+    form = PartnerForm(request.POST or None)
+    if request.method == "POST" and form.is_valid():
+        form.save()
+        messages.success(request, "Партнёр добавлен.")
+        return redirect("pages:partners")
+    return render(request, "office/event_form.html", {"form": form, "heading": "Новый партнёр"})
 
 
 @admin_required
