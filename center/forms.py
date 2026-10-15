@@ -74,9 +74,15 @@ class ApplicationForm(forms.ModelForm):
         fields = ("comment", "attachment")
         labels = {"comment": "Комментарий", "attachment": "Файл (необязательно)"}
         widgets = {
-            "comment": forms.Textarea(attrs={"class": "form-control", "rows": 4}),
+            "comment": forms.Textarea(attrs={"class": "form-control", "rows": 4, "maxlength": "1000"}),
             "attachment": forms.ClearableFileInput(attrs={"class": "form-control"}),
         }
+
+    def clean_comment(self):
+        text = self.cleaned_data.get("comment") or ""
+        if len(text) > 1000:
+            raise ValidationError("Комментарий длиннее 1000 символов.")
+        return text
 
     def clean_attachment(self):
         uploaded = self.cleaned_data.get("attachment")
