@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
 from django.shortcuts import get_object_or_404, redirect, render
 
 from center.forms import ApplicationForm
@@ -28,6 +28,15 @@ class UserLoginView(LoginView):
         if user.is_staff_role:
             return "/office/"
         return "/accounts/cabinet/"
+
+
+class UserPasswordView(PasswordChangeView):
+    template_name = "accounts/password.html"
+    success_url = "/accounts/cabinet/profile/"
+
+    def dispatch(self, request, *args, **kwargs):
+        request.breadcrumbs = [("Личный кабинет", "/accounts/cabinet/"), ("Пароль", None)]
+        return super().dispatch(request, *args, **kwargs)
 
 
 class UserLogoutView(LogoutView):

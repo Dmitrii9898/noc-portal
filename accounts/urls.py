@@ -16,4 +16,5 @@ urlpatterns = [
     path("cabinet/materials/", views.materials, name="materials"),
     path("cabinet/documents/", views.documents, name="documents"),
     path("cabinet/profile/", views.profile, name="profile"),
+    path("cabinet/password/", views.UserPasswordView.as_view(), name="password"),
 ]
