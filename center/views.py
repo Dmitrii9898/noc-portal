@@ -20,6 +20,8 @@ def dashboard(request):
     summary = queue_summary()
     return render(request, "office/dashboard.html", {
         "new_count": summary["new_total"],
+        "new_events": summary["new_events"],
+        "new_projects": summary["new_projects"],
         "projects": Project.objects.filter(is_open=True).count(),
         "events": Event.objects.filter(is_open=True).count(),
         "by_direction": Direction.objects.annotate(total=Count("projects")),
