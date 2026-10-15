@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Глоссарий — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+<h1 class="h3">Глоссарий</h1>
+{% for title, text in terms %}
+<h2 class="h5">{{ title }}</h2>
+<p>{{ text }}</p>
+{% endfor %}
+{% endblock %}

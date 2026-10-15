@@ -109,6 +109,18 @@ def faq(request):
     return render(request, "pages/faq.html")
 
 
+def glossary(request):
+    request.breadcrumbs = [("Глоссарий", None)]
+    terms = [
+        ("ЦУР 4", "Качественное образование: доступ к знаниям об устойчивом развитии."),
+        ("ЦУР 11", "Устойчивые города и населённые пункты."),
+        ("ЦУР 12", "Ответственное потребление и производство."),
+        ("ЦУР 13", "Борьба с изменением климата и учёт климатических рисков."),
+        ("НОЦ", "Научно-образовательный центр устойчивого развития университета."),
+    ]
+    return render(request, "pages/glossary.html", {"terms": terms})
+
+
 def help_page(request):
     request.breadcrumbs = [("Справка", None)]
     return render(request, "pages/help.html")
