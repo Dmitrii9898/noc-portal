@@ -6,7 +6,7 @@
 {% for group in groups %}
 <h2 class="h5">{{ group.grouper }}</h2>
 {% for item in group.list %}<article class="card mb-3"><div class="card-body">
-<h3 class="h5">{{ item.name }}</h3>
+<h3 class="h5"><a href="{{ item.get_absolute_url }}">{{ item.name }}</a></h3>
 <p>{{ item.description }}</p>
 {% if item.site %}<a href="{{ item.site }}">{{ item.site }}</a>{% endif %}
 </div></article>{% endfor %}

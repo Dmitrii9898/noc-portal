@@ -143,6 +143,9 @@ class Partner(models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse("pages:partner_detail", args=[self.pk])
+
 
 class CenterDocument(models.Model):
     title = models.CharField("Наименование", max_length=200)

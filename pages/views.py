@@ -104,6 +104,12 @@ def partners(request):
     return render(request, "pages/partners.html", {"items": Partner.objects.order_by("kind", "name")})
 
 
+def partner_detail(request, pk):
+    item = get_object_or_404(Partner, pk=pk)
+    request.breadcrumbs = [("Партнёры", "/partners/"), (item.name, None)]
+    return render(request, "pages/partner_detail.html", {"item": item})
+
+
 def documents(request):
     request.breadcrumbs = [("Документы", None)]
     from center.models import CenterDocument

@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block title %}{{ item.name }} — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+<p class="small text-secondary">{{ item.kind }}</p>
+<h1 class="h3">{{ item.name }}</h1>
+<p>{{ item.description }}</p>
+{% if item.site %}<p><a href="{{ item.site }}">{{ item.site }}</a></p>{% endif %}
+{% endblock %}
