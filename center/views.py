@@ -151,6 +151,7 @@ def manage_home(request):
         "users": AppUser.objects.count(),
         "news": News.objects.count(),
         "feedback": Feedback.objects.filter(is_processed=False).count(),
+        "new_applications": Application.objects.filter(status=Application.Status.NEW).count(),
         "publications": Publication.objects.count(),
         "partners": Partner.objects.count(),
     })
