@@ -31,6 +31,7 @@ class Feedback(models.Model):
     message = models.TextField("Сообщение")
     created_at = models.DateTimeField(auto_now_add=True)
     is_processed = models.BooleanField("Обработано", default=False)
+    staff_note = models.CharField("Пометка", max_length=300, blank=True)
 
     class Meta:
         db_table = "feedback"

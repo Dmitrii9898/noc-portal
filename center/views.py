@@ -225,7 +225,8 @@ def manage_feedback(request):
     if request.method == "POST":
         item = get_object_or_404(Feedback, pk=request.POST.get("feedback_id"))
         item.is_processed = True
-        item.save(update_fields=["is_processed"])
+        item.staff_note = (request.POST.get("staff_note") or "")[:300]
+        item.save(update_fields=["is_processed", "staff_note"])
         return redirect("center:manage_feedback")
     return render(request, "manage/feedback.html", {"items": Feedback.objects.all()})
 

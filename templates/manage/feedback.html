@@ -5,6 +5,9 @@
 {% for item in items %}<article class="card mb-3"><div class="card-body">
 <strong>{{ item.subject }}</strong> — {{ item.name }} ({{ item.email }})
 <p>{{ item.message }}</p>
-{% if not item.is_processed %}<form method="post">{% csrf_token %}<input type="hidden" name="feedback_id" value="{{ item.pk }}"><button class="btn btn-sm btn-gold">Обработано</button></form>{% endif %}
+{% if item.staff_note %}<p>Пометка: {{ item.staff_note }}</p>{% endif %}
+{% if not item.is_processed %}<form method="post">{% csrf_token %}<input type="hidden" name="feedback_id" value="{{ item.pk }}">
+<input class="form-control mb-2" name="staff_note" maxlength="300" placeholder="Пометка сотрудника">
+<button class="btn btn-sm btn-gold">Обработано</button></form>{% endif %}
 </div></article>{% endfor %}
 {% endblock %}
