@@ -2,10 +2,13 @@
 {% block title %}Партнёры — {{ SITE_NAME }}{% endblock %}
 {% block content %}
 <h1 class="h3">Партнёры</h1>
-{% for item in items %}<article class="card mb-3"><div class="card-body">
-<div class="small text-secondary">{{ item.kind }}</div>
-<h2 class="h5">{{ item.name }}</h2>
+{% regroup items by kind as groups %}
+{% for group in groups %}
+<h2 class="h5">{{ group.grouper }}</h2>
+{% for item in group.list %}<article class="card mb-3"><div class="card-body">
+<h3 class="h5">{{ item.name }}</h3>
 <p>{{ item.description }}</p>
 {% if item.site %}<a href="{{ item.site }}">{{ item.site }}</a>{% endif %}
 </div></article>{% endfor %}
+{% endfor %}
 {% endblock %}

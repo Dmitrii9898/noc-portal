@@ -101,7 +101,7 @@ def publications(request):
 
 def partners(request):
     request.breadcrumbs = [("Партнёры", None)]
-    return render(request, "pages/partners.html", {"items": Partner.objects.all()})
+    return render(request, "pages/partners.html", {"items": Partner.objects.order_by("kind", "name")})
 
 
 def documents(request):
