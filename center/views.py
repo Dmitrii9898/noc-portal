@@ -8,7 +8,7 @@ from accounts.models import AppUser, Role
 from pages.forms import NewsForm
 from pages.models import Feedback, News
 
-from .forms import DirectionSummaryForm, EventForm, PartnerForm, ProjectForm
+from .forms import DirectionSummaryForm, DocumentForm, EventForm, PartnerForm, ProjectForm
 from .exports import applications_csv, applications_docx, applications_xlsx
 from .models import Application, AuditLog, Direction, Event, Partner, Project, Publication
 from .services import ApplyError, decide, open_seats, queue_summary
@@ -206,6 +206,17 @@ def manage_news(request):
             item.save(update_fields=["is_published"])
         return redirect("center:manage_news")
     return render(request, "manage/news.html", {"items": News.objects.all()})
+
+
+@admin_required
+def manage_document_add(request):
+    request.breadcrumbs = [("Администрирование", "/office/manage/"), ("Новый документ", None)]
+    form = DocumentForm(request.POST or None, request.FILES or None)
+    if request.method == "POST" and form.is_valid():
+        form.save()
+        messages.success(request, "Документ добавлен.")
+        return redirect("pages:documents")
+    return render(request, "office/event_form.html", {"form": form, "heading": "Новый документ"})
 
 
 @admin_required

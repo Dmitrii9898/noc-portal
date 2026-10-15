@@ -1,6 +1,17 @@
 from django import forms
 
-from .models import Application, Direction, Event, Partner, Project
+from .models import Application, CenterDocument, Direction, Event, Partner, Project
+
+
+class DocumentForm(forms.ModelForm):
+    class Meta:
+        model = CenterDocument
+        fields = ("title", "file", "published_on")
+        widgets = {
+            "title": forms.TextInput(attrs={"class": "form-control"}),
+            "file": forms.ClearableFileInput(attrs={"class": "form-control"}),
+            "published_on": forms.DateInput(attrs={"class": "form-control", "type": "date"}),
+        }
 
 
 class PartnerForm(forms.ModelForm):

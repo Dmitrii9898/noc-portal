@@ -20,6 +20,7 @@ urlpatterns = [
     path("manage/users/", views.manage_users, name="manage_users"),
     path("manage/partners/new/", views.manage_partner_add, name="manage_partner_add"),
     path("manage/news/", views.manage_news, name="manage_news"),
+    path("manage/documents/new/", views.manage_document_add, name="manage_document_add"),
     path("manage/feedback/", views.manage_feedback, name="manage_feedback"),
     path("manage/publications/", views.manage_publications, name="manage_publications"),
     path("manage/audit/", views.manage_audit, name="manage_audit"),
