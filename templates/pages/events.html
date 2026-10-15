@@ -13,8 +13,12 @@
 {% for item in directions %}<option value="{{ item.slug }}" {% if direction == item.slug %}selected{% endif %}>ЦУР {{ item.code }} — {{ item.title }}</option>{% endfor %}
 </select>
 </form>
-<ul class="list-group">{% for item in items %}
+{% regroup items by starts_at|date:"F Y" as months %}
+{% for month in months %}
+<h2 class="h5">{{ month.grouper }}</h2>
+<ul class="list-group mb-3">{% for item in month.list %}
 <li class="list-group-item"><a href="{{ item.get_absolute_url }}">{{ item.title }}</a>
 <div class="small text-secondary">{{ item.starts_at|date:"d.m.Y H:i" }} · {{ item.place }} · мест: {{ item.seats }}</div></li>
 {% endfor %}</ul>
+{% empty %}<p>В этом разделе мероприятий нет.</p>{% endfor %}
 {% endblock %}
