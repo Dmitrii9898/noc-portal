@@ -16,6 +16,7 @@ urlpatterns = [
     path("news/new/", views.news_add, name="news_add"),
     path("reports/", views.reports, name="reports"),
     path("manage/", views.manage_home, name="manage_home"),
+    path("manage/directions/<int:pk>/", views.manage_direction, name="manage_direction"),
     path("manage/users/", views.manage_users, name="manage_users"),
     path("manage/news/", views.manage_news, name="manage_news"),
     path("manage/feedback/", views.manage_feedback, name="manage_feedback"),

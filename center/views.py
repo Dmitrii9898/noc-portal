@@ -8,7 +8,7 @@ from accounts.models import AppUser, Role
 from pages.forms import NewsForm
 from pages.models import Feedback, News
 
-from .forms import EventForm, ProjectForm
+from .forms import DirectionSummaryForm, EventForm, ProjectForm
 from .exports import applications_csv, applications_docx, applications_xlsx
 from .models import Application, AuditLog, Direction, Event, Partner, Project, Publication
 from .services import ApplyError, decide, open_seats, queue_summary
@@ -147,12 +147,25 @@ def reports(request):
 def manage_home(request):
     request.breadcrumbs = [("Администрирование", None)]
     return render(request, "manage/home.html", {
+        "directions": Direction.objects.all(),
         "users": AppUser.objects.count(),
         "news": News.objects.count(),
         "feedback": Feedback.objects.filter(is_processed=False).count(),
         "publications": Publication.objects.count(),
         "partners": Partner.objects.count(),
     })
+
+
+@admin_required
+def manage_direction(request, pk):
+    item = get_object_or_404(Direction, pk=pk)
+    request.breadcrumbs = [("Администрирование", "/office/manage/"), (item.title, None)]
+    form = DirectionSummaryForm(request.POST or None, instance=item)
+    if request.method == "POST" and form.is_valid():
+        form.save()
+        messages.success(request, "Описание направления сохранено.")
+        return redirect("pages:direction_detail", slug=item.slug)
+    return render(request, "office/event_form.html", {"form": form, "heading": item.title})
 
 
 @admin_required

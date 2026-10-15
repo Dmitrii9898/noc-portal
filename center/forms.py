@@ -1,6 +1,13 @@
 from django import forms
 
-from .models import Application, Event, Project
+from .models import Application, Direction, Event, Project
+
+
+class DirectionSummaryForm(forms.ModelForm):
+    class Meta:
+        model = Direction
+        fields = ("summary",)
+        widgets = {"summary": forms.TextInput(attrs={"class": "form-control"})}
 
 
 class ProjectForm(forms.ModelForm):
