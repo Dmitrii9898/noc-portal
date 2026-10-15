@@ -2,6 +2,16 @@
 {% block title %}Заявки — {{ SITE_NAME }}{% endblock %}
 {% block content %}
 <h1 class="h3">Заявки</h1>
+<form method="get" class="d-flex gap-2 mb-3">
+<select class="form-select" name="status"><option value="">Все статусы</option>
+<option value="new" {% if status == "new" %}selected{% endif %}>Новые</option>
+<option value="approved" {% if status == "approved" %}selected{% endif %}>Принятые</option>
+<option value="rejected" {% if status == "rejected" %}selected{% endif %}>Отклонённые</option></select>
+<select class="form-select" name="kind"><option value="">Все типы</option>
+<option value="event" {% if kind == "event" %}selected{% endif %}>Мероприятия</option>
+<option value="project" {% if kind == "project" %}selected{% endif %}>Проекты</option></select>
+<button class="btn btn-gold" type="submit">Фильтр</button>
+</form>
 <div class="table-responsive card"><table class="table mb-0"><thead><tr><th>№</th><th>Участник</th><th>Куда</th><th>Статус</th></tr></thead>
 <tbody>{% for item in items %}<tr>
 <td><a href="{% url 'center:application_decide' item.pk %}">{{ item.pk }}</a></td>

@@ -29,8 +29,15 @@ def dashboard(request):
 @staff_required
 def application_queue(request):
     request.breadcrumbs = [("Центр", "/office/"), ("Заявки", None)]
+    status = request.GET.get("status") or ""
+    kind = request.GET.get("kind") or ""
+    qs = Application.objects.select_related("user", "project", "event")
+    if status:
+        qs = qs.filter(status=status)
+    if kind:
+        qs = qs.filter(kind=kind)
     return render(request, "office/applications.html", {
-        "items": Application.objects.select_related("user", "project", "event"),
+        "items": qs, "status": status, "kind": kind,
     })
 
 
