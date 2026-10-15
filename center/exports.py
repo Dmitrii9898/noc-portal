@@ -1,5 +1,6 @@
-"""Выгрузка заявок в Excel и Word."""
-from io import BytesIO
+"""Выгрузка заявок в Excel, Word и CSV."""
+import csv
+from io import BytesIO, StringIO
 
 from django.http import HttpResponse
 from docx import Document
@@ -12,6 +13,17 @@ def _rows(applications):
     for item in applications:
         target = item.project.title if item.project_id else item.event.title
         yield [item.pk, str(item.user), item.get_kind_display(), target, item.get_status_display(), item.created_at.strftime("%d.%m.%Y")]
+
+
+def applications_csv(applications):
+    buffer = StringIO()
+    writer = csv.writer(buffer)
+    writer.writerow(["№", "Участник", "Тип", "Объект", "Статус", "Дата"])
+    for row in _rows(applications):
+        writer.writerow(row)
+    response = HttpResponse(buffer.getvalue(), content_type="text/csv; charset=utf-8")
+    response["Content-Disposition"] = 'attachment; filename="applications.csv"'
+    return response
 
 
 def applications_xlsx(applications):

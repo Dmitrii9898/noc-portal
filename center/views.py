@@ -9,7 +9,7 @@ from pages.forms import NewsForm
 from pages.models import Feedback, News
 
 from .forms import EventForm, ProjectForm
-from .exports import applications_docx, applications_xlsx
+from .exports import applications_csv, applications_docx, applications_xlsx
 from .models import Application, AuditLog, Direction, Event, Partner, Project, Publication
 from .services import ApplyError, decide, queue_summary
 
@@ -130,6 +130,8 @@ def reports(request):
     only_new = request.GET.get("scope") == "new"
     if only_new:
         items = items.filter(status=Application.Status.NEW)
+    if request.GET.get("format") == "csv":
+        return applications_csv(items)
     if request.GET.get("format") == "xlsx":
         return applications_xlsx(items)
     if request.GET.get("format") == "docx":
