@@ -52,10 +52,10 @@ def can_apply(user, project=None, event=None):
         return "Не выбран проект или мероприятие."
     if not event.is_open:
         return "Запись на мероприятие закрыта."
-    if open_seats(event) <= 0:
-        return "Свободных мест не осталось."
     if already_applied(user, event=event):
         return "Заявка на это мероприятие уже подана."
+    if open_seats(event) <= 0:
+        return "Свободных мест не осталось."
     return ""
 
 
