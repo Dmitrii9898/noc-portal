@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block title %}Мероприятия — {{ SITE_NAME }}{% endblock %}
 {% block content %}
-<h1 class="h3">Мероприятия</h1>
+<div class="d-flex justify-content-between mb-3"><h1 class="h3 mb-0">Мероприятия</h1><a class="btn btn-gold" href="{% url 'center:event_add' %}">Новое</a></div>
 <ul>{% for item in items %}<li>{{ item.title }} — заявок: {{ item.taken }} / мест {{ item.seats }} — {% if item.is_open %}набор открыт{% else %}набор закрыт{% endif %}
 <form method="post" action="{% url 'center:event_toggle' item.pk %}">{% csrf_token %}<button class="btn btn-sm btn-outline-secondary" type="submit">{% if item.is_open %}Закрыть набор{% else %}Открыть набор{% endif %}</button></form></li>{% endfor %}</ul>
 {% endblock %}

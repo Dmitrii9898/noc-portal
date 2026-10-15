@@ -7,6 +7,7 @@ from accounts.mixins import admin_required, staff_required
 from accounts.models import AppUser, Role
 from pages.models import Feedback, News
 
+from .forms import EventForm
 from .exports import applications_docx, applications_xlsx
 from .models import Application, AuditLog, Direction, Event, Partner, Project, Publication
 from .services import ApplyError, decide, queue_summary
@@ -51,6 +52,17 @@ def application_decide(request, pk):
 def event_board(request):
     request.breadcrumbs = [("Центр", "/office/"), ("Мероприятия", None)]
     return render(request, "office/events.html", {"items": Event.objects.annotate(taken=Count("applications"))})
+
+
+@staff_required
+def event_add(request):
+    request.breadcrumbs = [("Центр", "/office/"), ("Мероприятия", "/office/events/"), ("Новое", None)]
+    form = EventForm(request.POST or None)
+    if request.method == "POST" and form.is_valid():
+        form.save()
+        messages.success(request, "Мероприятие создано.")
+        return redirect("center:events")
+    return render(request, "office/event_form.html", {"form": form, "heading": "Новое мероприятие"})
 
 
 @staff_required

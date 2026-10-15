@@ -8,6 +8,7 @@ urlpatterns = [
     path("applications/", views.application_queue, name="applications"),
     path("applications/<int:pk>/", views.application_decide, name="application_decide"),
     path("events/", views.event_board, name="events"),
+    path("events/new/", views.event_add, name="event_add"),
     path("events/<int:pk>/toggle/", views.event_toggle, name="event_toggle"),
     path("projects/", views.project_board, name="projects"),
     path("projects/<int:pk>/toggle/", views.project_toggle, name="project_toggle"),
