@@ -37,10 +37,15 @@ def direction_detail(request, slug):
 def project_list(request):
     request.breadcrumbs = [("Проекты", None)]
     opened = request.GET.get("open") == "1"
+    direction = request.GET.get("direction") or ""
     qs = Project.objects.select_related("direction")
     if opened:
         qs = qs.filter(is_open=True)
-    return render(request, "pages/projects.html", {"items": qs, "opened": opened})
+    if direction:
+        qs = qs.filter(direction__slug=direction)
+    return render(request, "pages/projects.html", {
+        "items": qs, "opened": opened, "directions": Direction.objects.all(), "direction": direction,
+    })
 
 
 def project_detail(request, slug):
@@ -52,13 +57,18 @@ def project_detail(request, slug):
 def event_list(request):
     request.breadcrumbs = [("Мероприятия", None)]
     when = request.GET.get("when", "upcoming")
+    direction = request.GET.get("direction") or ""
     qs = Event.objects.select_related("direction")
     if when == "past":
         qs = qs.filter(starts_at__lt=timezone.now())
     else:
         when = "upcoming"
         qs = qs.filter(starts_at__gte=timezone.now())
-    return render(request, "pages/events.html", {"items": qs, "when": when})
+    if direction:
+        qs = qs.filter(direction__slug=direction)
+    return render(request, "pages/events.html", {
+        "items": qs, "when": when, "directions": Direction.objects.all(), "direction": direction,
+    })
 
 
 def event_detail(request, slug):

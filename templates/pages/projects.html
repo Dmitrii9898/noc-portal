@@ -6,6 +6,13 @@
 <a class="btn btn-sm {% if not opened %}btn-gold{% else %}btn-outline-secondary{% endif %}" href="{% url 'pages:project_list' %}">Все</a>
 <a class="btn btn-sm {% if opened %}btn-gold{% else %}btn-outline-secondary{% endif %}" href="?open=1">Набор открыт</a>
 </p>
+<form method="get" class="mb-3">
+{% if opened %}<input type="hidden" name="open" value="1">{% endif %}
+<select class="form-select" name="direction" onchange="this.form.submit()">
+<option value="">Все направления</option>
+{% for item in directions %}<option value="{{ item.slug }}" {% if direction == item.slug %}selected{% endif %}>ЦУР {{ item.code }} — {{ item.title }}</option>{% endfor %}
+</select>
+</form>
 <div class="table-responsive card"><table class="table mb-0">
 <thead><tr><th>Проект</th><th>Направление</th><th>Набор</th></tr></thead>
 <tbody>{% for item in items %}<tr>

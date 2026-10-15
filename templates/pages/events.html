@@ -6,6 +6,13 @@
 <a class="btn btn-sm {% if when == 'upcoming' %}btn-gold{% else %}btn-outline-secondary{% endif %}" href="?when=upcoming">Предстоящие</a>
 <a class="btn btn-sm {% if when == 'past' %}btn-gold{% else %}btn-outline-secondary{% endif %}" href="?when=past">Прошедшие</a>
 </p>
+<form method="get" class="mb-3">
+<input type="hidden" name="when" value="{{ when }}">
+<select class="form-select" name="direction" onchange="this.form.submit()">
+<option value="">Все направления</option>
+{% for item in directions %}<option value="{{ item.slug }}" {% if direction == item.slug %}selected{% endif %}>ЦУР {{ item.code }} — {{ item.title }}</option>{% endfor %}
+</select>
+</form>
 <ul class="list-group">{% for item in items %}
 <li class="list-group-item"><a href="{{ item.get_absolute_url }}">{{ item.title }}</a>
 <div class="small text-secondary">{{ item.starts_at|date:"d.m.Y H:i" }} · {{ item.place }} · мест: {{ item.seats }}</div></li>
