@@ -2,6 +2,12 @@
 {% block title %}Публикации — {{ SITE_NAME }}{% endblock %}
 {% block content %}
 <h1 class="h3">Публикации</h1>
+<form method="get" class="mb-3">
+<select class="form-select" name="year" onchange="this.form.submit()">
+<option value="">Все годы</option>
+{% for value in years %}<option value="{{ value }}" {% if year == value|stringformat:"s" %}selected{% endif %}>{{ value }}</option>{% endfor %}
+</select>
+</form>
 <div class="table-responsive card"><table class="table mb-0">
 <thead><tr><th>Год</th><th>Название</th><th>Авторы</th><th>Файл</th></tr></thead>
 <tbody>{% for item in items %}<tr>

@@ -91,7 +91,12 @@ def news_detail(request, slug):
 
 def publications(request):
     request.breadcrumbs = [("Публикации", None)]
-    return render(request, "pages/publications.html", {"items": Publication.objects.filter(is_published=True)})
+    year = request.GET.get("year") or ""
+    qs = Publication.objects.filter(is_published=True)
+    years = qs.values_list("year", flat=True).distinct().order_by("-year")
+    if year.isdigit():
+        qs = qs.filter(year=int(year))
+    return render(request, "pages/publications.html", {"items": qs, "years": years, "year": year})
 
 
 def partners(request):
