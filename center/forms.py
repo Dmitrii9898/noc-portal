@@ -1,4 +1,7 @@
+import os
+
 from django import forms
+from django.core.exceptions import ValidationError
 
 from .models import Application, CenterDocument, Direction, Event, Partner, Project
 
@@ -74,3 +77,14 @@ class ApplicationForm(forms.ModelForm):
             "comment": forms.Textarea(attrs={"class": "form-control", "rows": 4}),
             "attachment": forms.ClearableFileInput(attrs={"class": "form-control"}),
         }
+
+    def clean_attachment(self):
+        uploaded = self.cleaned_data.get("attachment")
+        if not uploaded:
+            return uploaded
+        ext = os.path.splitext(uploaded.name)[1].lower()
+        if ext not in {".pdf", ".docx", ".txt"}:
+            raise ValidationError("Допустимы только файлы pdf, docx и txt.")
+        if uploaded.size > 5 * 1024 * 1024:
+            raise ValidationError("Файл больше 5 МБ.")
+        return uploaded
