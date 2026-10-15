@@ -31,8 +31,17 @@ def already_applied(user, project=None, event=None):
     return qs.filter(event=event).exists()
 
 
+def _approved_exists(user, project=None, event=None):
+    qs = Application.objects.filter(user=user, status=Application.Status.APPROVED)
+    if project is not None:
+        return qs.filter(project=project).exists()
+    return qs.filter(event=event).exists()
+
+
 def can_apply(user, project=None, event=None):
     """Возвращает текст причины отказа или пустую строку, если заявка допустима."""
+    if _approved_exists(user, project=project, event=event):
+        return "Заявка уже принята, повторно отправлять её не нужно."
     if project is not None:
         if not project.is_open:
             return "Набор в проект закрыт."
