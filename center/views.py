@@ -11,7 +11,7 @@ from pages.models import Feedback, News
 from .forms import EventForm, ProjectForm
 from .exports import applications_csv, applications_docx, applications_xlsx
 from .models import Application, AuditLog, Direction, Event, Partner, Project, Publication
-from .services import ApplyError, decide, queue_summary
+from .services import ApplyError, decide, open_seats, queue_summary
 
 
 @staff_required
@@ -61,7 +61,10 @@ def application_decide(request, pk):
 @staff_required
 def event_board(request):
     request.breadcrumbs = [("Центр", "/office/"), ("Мероприятия", None)]
-    return render(request, "office/events.html", {"items": Event.objects.annotate(taken=Count("applications"))})
+    items = list(Event.objects.annotate(taken=Count("applications")))
+    for item in items:
+        item.free = open_seats(item)
+    return render(request, "office/events.html", {"items": items})
 
 
 @staff_required
