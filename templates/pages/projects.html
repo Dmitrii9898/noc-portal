@@ -2,6 +2,10 @@
 {% block title %}Проекты — {{ SITE_NAME }}{% endblock %}
 {% block content %}
 <h1 class="h3">Проекты</h1>
+<p>
+<a class="btn btn-sm {% if not opened %}btn-gold{% else %}btn-outline-secondary{% endif %}" href="{% url 'pages:project_list' %}">Все</a>
+<a class="btn btn-sm {% if opened %}btn-gold{% else %}btn-outline-secondary{% endif %}" href="?open=1">Набор открыт</a>
+</p>
 <div class="table-responsive card"><table class="table mb-0">
 <thead><tr><th>Проект</th><th>Направление</th><th>Набор</th></tr></thead>
 <tbody>{% for item in items %}<tr>

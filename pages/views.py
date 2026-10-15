@@ -36,7 +36,11 @@ def direction_detail(request, slug):
 
 def project_list(request):
     request.breadcrumbs = [("Проекты", None)]
-    return render(request, "pages/projects.html", {"items": Project.objects.select_related("direction")})
+    opened = request.GET.get("open") == "1"
+    qs = Project.objects.select_related("direction")
+    if opened:
+        qs = qs.filter(is_open=True)
+    return render(request, "pages/projects.html", {"items": qs, "opened": opened})
 
 
 def project_detail(request, slug):
