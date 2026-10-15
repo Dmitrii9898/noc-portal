@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.shortcuts import get_object_or_404, redirect, render
+from django.utils import timezone
 
 from center.models import Direction, Event, Partner, Project, Publication
 from center.services import open_seats
@@ -46,7 +47,14 @@ def project_detail(request, slug):
 
 def event_list(request):
     request.breadcrumbs = [("Мероприятия", None)]
-    return render(request, "pages/events.html", {"items": Event.objects.select_related("direction")})
+    when = request.GET.get("when", "upcoming")
+    qs = Event.objects.select_related("direction")
+    if when == "past":
+        qs = qs.filter(starts_at__lt=timezone.now())
+    else:
+        when = "upcoming"
+        qs = qs.filter(starts_at__gte=timezone.now())
+    return render(request, "pages/events.html", {"items": qs, "when": when})
 
 
 def event_detail(request, slug):
