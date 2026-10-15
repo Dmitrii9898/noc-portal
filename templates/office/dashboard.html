@@ -12,6 +12,7 @@
 <a class="btn btn-outline-secondary" href="{% url 'center:projects' %}">Проекты</a>
 <a class="btn btn-outline-secondary" href="{% url 'center:events' %}">Мероприятия</a>
 <a class="btn btn-outline-secondary" href="{% url 'center:reports' %}">Отчёты</a>
+<a class="btn btn-outline-secondary" href="{% url 'center:news_add' %}">Новость</a>
 </div>
 <ul>{% for item in by_direction %}<li>ЦУР {{ item.code }} — проектов: {{ item.total }}</li>{% endfor %}</ul>
 {% endblock %}

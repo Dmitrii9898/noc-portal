@@ -5,6 +5,7 @@ from django.utils import timezone
 
 from accounts.mixins import admin_required, staff_required
 from accounts.models import AppUser, Role
+from pages.forms import NewsForm
 from pages.models import Feedback, News
 
 from .forms import EventForm, ProjectForm
@@ -100,6 +101,17 @@ def project_toggle(request, pk):
         item.save(update_fields=["is_open"])
         messages.success(request, "Набор в проект обновлён.")
     return redirect("center:projects")
+
+
+@staff_required
+def news_add(request):
+    request.breadcrumbs = [("Центр", "/office/"), ("Новая новость", None)]
+    form = NewsForm(request.POST or None)
+    if request.method == "POST" and form.is_valid():
+        form.save()
+        messages.success(request, "Новость опубликована.")
+        return redirect("pages:news_list")
+    return render(request, "office/event_form.html", {"form": form, "heading": "Новая новость"})
 
 
 @staff_required
