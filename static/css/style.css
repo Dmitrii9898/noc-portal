@@ -50,6 +50,7 @@ a { color: var(--brand); }
 .form-label { display: block; margin-bottom: .3rem; font-weight: 600; }
 .form-control, .form-select { width: 100%; padding: .5rem .65rem; border: 1px solid #c9d5cc; border-radius: 8px; font: inherit; background: #fff; }
 .alert { background: #e7f6ea; border: 1px solid #b7dfc0; border-radius: 10px; padding: .75rem 1rem; margin-bottom: 1rem; }
+.alert-error, .alert-danger { background: #fdecec; border-color: #e3b3b3; }
 .btn-close { display: none; }
 .site-footer { background: var(--brand-dark); color: #e7f2ea; }
 .site-footer a { color: var(--gold); text-decoration: none; }

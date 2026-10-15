@@ -60,7 +60,7 @@
     </ol>
 </nav>
 <main class="container my-4 flex-grow-1">
-    {% if messages %}{% for message in messages %}<div class="alert">{{ message }}</div>{% endfor %}{% endif %}
+    {% if messages %}{% for message in messages %}<div class="alert alert-{{ message.tags }}">{{ message }}</div>{% endfor %}{% endif %}
     {% block content %}{% endblock %}
 </main>
 <footer class="site-footer mt-auto">
