@@ -3,6 +3,8 @@
 {% block content %}
 <h1 class="h3">Отчёты</h1>
 <p>В реестре {{ count }} заявок.</p>
-<a class="btn btn-gold" href="?format=xlsx">Скачать Excel</a>
-<a class="btn btn-outline-secondary" href="?format=docx">Скачать Word</a>
+<a class="btn btn-gold" href="?format=xlsx{% if only_new %}&scope=new{% endif %}">Скачать Excel</a>
+<a class="btn btn-outline-secondary" href="?format=docx{% if only_new %}&scope=new{% endif %}">Скачать Word</a>
+<a class="btn btn-outline-secondary" href="?scope=new">Только новые</a>
+<a class="btn btn-outline-secondary" href="{% url 'center:reports' %}">Все</a>
 {% endblock %}

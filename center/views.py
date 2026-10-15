@@ -127,11 +127,14 @@ def news_add(request):
 def reports(request):
     request.breadcrumbs = [("Центр", "/office/"), ("Отчёты", None)]
     items = Application.objects.select_related("user", "project", "event")
+    only_new = request.GET.get("scope") == "new"
+    if only_new:
+        items = items.filter(status=Application.Status.NEW)
     if request.GET.get("format") == "xlsx":
         return applications_xlsx(items)
     if request.GET.get("format") == "docx":
         return applications_docx(items)
-    return render(request, "office/reports.html", {"count": items.count()})
+    return render(request, "office/reports.html", {"count": items.count(), "only_new": only_new})
 
 
 @admin_required
