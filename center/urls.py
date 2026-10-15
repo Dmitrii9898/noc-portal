@@ -10,6 +10,7 @@ urlpatterns = [
     path("events/", views.event_board, name="events"),
     path("events/<int:pk>/toggle/", views.event_toggle, name="event_toggle"),
     path("projects/", views.project_board, name="projects"),
+    path("projects/<int:pk>/toggle/", views.project_toggle, name="project_toggle"),
     path("reports/", views.reports, name="reports"),
     path("manage/", views.manage_home, name="manage_home"),
     path("manage/users/", views.manage_users, name="manage_users"),

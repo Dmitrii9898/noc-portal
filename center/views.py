@@ -70,6 +70,16 @@ def project_board(request):
 
 
 @staff_required
+def project_toggle(request, pk):
+    item = get_object_or_404(Project, pk=pk)
+    if request.method == "POST":
+        item.is_open = not item.is_open
+        item.save(update_fields=["is_open"])
+        messages.success(request, "Набор в проект обновлён.")
+    return redirect("center:projects")
+
+
+@staff_required
 def reports(request):
     request.breadcrumbs = [("Центр", "/office/"), ("Отчёты", None)]
     items = Application.objects.select_related("user", "project", "event")
