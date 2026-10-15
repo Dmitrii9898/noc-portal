@@ -54,6 +54,16 @@ def event_board(request):
 
 
 @staff_required
+def event_toggle(request, pk):
+    item = get_object_or_404(Event, pk=pk)
+    if request.method == "POST":
+        item.is_open = not item.is_open
+        item.save(update_fields=["is_open"])
+        messages.success(request, "Набор на мероприятие обновлён.")
+    return redirect("center:events")
+
+
+@staff_required
 def project_board(request):
     request.breadcrumbs = [("Центр", "/office/"), ("Проекты", None)]
     return render(request, "office/projects.html", {"items": Project.objects.annotate(taken=Count("applications"))})
